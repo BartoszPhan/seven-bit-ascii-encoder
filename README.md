@@ -26,3 +26,10 @@ The escape byte `0x1B` (ASCII ESC) is itself escaped as `ESC 1B`, so a decoder n
 - `decode(string) -> Uint8Array`
 
 `decode` accepts lowercase hex digits even though `encode` always emits uppercase.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
